@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy 28th Birthday Chris,My Husband ❤️</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,sans-serif}
+body{
+background:linear-gradient(180deg,#10001f,#2d0a45,#10001f);
+color:#fff;text-align:center;overflow-x:hidden;min-height:100vh}
+h1{margin:20px;font-size:2.6rem;text-shadow:0 0 15px hotpink}
+section{display:none;padding:25px;max-width:900px;margin:auto}
+#home{display:block}
+button{
+padding:12px 25px;border:none;border-radius:12px;
+background:#ff4fa0;color:#fff;font-size:18px;cursor:pointer;
+margin:15px;transition:.25s}
+button:hover{transform:scale(1.05)}
+#game{position:relative;height:70vh;border-radius:15px;overflow:hidden;background:#16052a}
+.heart{position:absolute;font-size:34px;cursor:pointer;animation:fall linear forwards}
+@keyframes fall{from{transform:translateY(-60px)}to{transform:translateY(80vh)}}
+#score,#timer{font-size:24px;margin:10px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px;margin-top:20px}
+.gallery img{width:100%;height:220px;object-fit:cover;border-radius:15px;border:3px solid hotpink}
+.reasonBox{
+margin:30px auto;padding:25px;background:rgba(255,255,255,.08);
+border-radius:20px;max-width:700px;font-size:1.4rem;min-height:120px}
+.option{
+background:#333;padding:15px;border-radius:12px;margin:12px auto;
+max-width:280px;cursor:pointer}
+.option:hover{background:#ff4fa0}
+#letter{font-size:1.3rem;line-height:1.8;white-space:pre-wrap}
+.star{position:fixed;width:3px;height:3px;background:#fff;border-radius:50%;animation:twinkle 2s infinite}
+@keyframes twinkle{50%{opacity:.2}}
+</style>
+</head>
+<body>
+
+<audio id="music" loop>
+<source src="birthday.mp3" type="audio/mpeg">
+</audio>
+
+<div id="stars"></div>
+
+<section id="home">
+<h1>🎂 Happy 28th Birthday Chris ❤️</h1>
+<p style="font-size:22px">Welcome to your birthday adventure!</p>
+<p style="margin-top:10px">Complete every level to unlock your surprise.</p>
+<button onclick="start()">Start Adventure ❤️</button>
+</section>
+
+<section id="hearts">
+<h1>❤️ Catch 28 Hearts</h1>
+<div id="score">Hearts: 0 / 28</div>
+<div id="timer">30</div>
+<div id="game"></div>
+</section>
+
+<section id="memories">
+<h1>📸 Our Memories</h1>
+<p>Remember cookie:</p>
+<div class="gallery">
+<img src="photo1.jpg">
+<img src="photo2.jpg">
+<img src="photo3.jpeg">
+<img src="photo4.jpg">
+</div>
+<button onclick="showReasons()">Next ❤️</button>
+</section>
+
+<section id="reasons">
+<h1>💖 28 Reasons I Love You</h1>
+<div class="reasonBox" id="reasonBox">Click below ❤️</div>
+<button onclick="nextReason()">Next Reason</button>
+</section>
+
+<section id="quiz">
+<h1>🎮 Birthday Quiz</h1>
+<p style="margin:20px;font-size:22px">Who loves you the most?</p>
+<div class="option" onclick="finish()">❤️ Angie ❤️</div>
+<div class="option" onclick="alert('Try again 😆')">Pizza</div>
+<div class="option" onclick="alert('Try again 😆')">Truck</div>
+<div class="option" onclick="alert('Try again 😆')">Gym</div>
+</section>
+
+<section id="end">
+<h1>🎉 Happy 28th Birthday Chris! 🎉</h1>
+<div id="letter"></div>
+<button onclick="fireworks()">Celebrate 🎆</button>
+</section>
+
+<script>
+for(let i=0;i<180;i++){
+ let s=document.createElement("div");
+ s.className="star";
+ s.style.left=Math.random()*100+"vw";
+ s.style.top=Math.random()*100+"vh";
+ s.style.animationDelay=Math.random()*2+"s";
+ document.body.appendChild(s);
+}
+
+const reasons=[
+"I love your smile.",
+"I love your blue eyes.",
+"I love your hugs.",
+"I love your laugh.",
+"I love how hardworking you are.",
+"I love our adventures.",
+"I love your kindness.",
+"I love your strength.",
+"I love your patience.",
+"I love your heart.",
+"I love your silly jokes.",
+"I love how safe I feel with you.",
+"I love spending time with you.",
+"I love your kisses.",
+"I love your support.",
+"I love your determination.",
+"I love your voice.",
+"I love our late-night talks.",
+"I love making memories together.",
+"I love your cuddles.",
+"I love your goofy side.",
+"I love dreaming about our future.",
+"I love growing with you.",
+"I love your encouragement.",
+"I love that you chose me.",
+"I love being your wife.",
+"I love everything about you.",
+"And I'll love you forever. ❤️"
+];
+
+let r=0;
+function show(id){
+document.querySelectorAll("section").forEach(s=>s.style.display="none");
+document.getElementById(id).style.display="block";
+}
+
+function start(){
+document.getElementById("music").play().catch(()=>{});
+show("hearts");
+spawn();
+timer=setInterval(()=>{
+time--;
+timerText.innerText=time;
+if(time<=0){clearInterval(timer);show("memories");}
+},1000);
+}
+let score=0,time=30;
+const game=document.getElementById("game");
+const timerText=document.getElementById("timer");
+const scoreText=document.getElementById("score");
+
+function spawn(){
+let create=setInterval(()=>{
+if(time<=0){clearInterval(create);return;}
+let h=document.createElement("div");
+h.className="heart";
+h.innerHTML="❤️";
+h.style.left=Math.random()*95+"%";
+h.style.animationDuration=(3+Math.random()*2)+"s";
+h.onclick=()=>{
+score++;
+scoreText.innerText="Hearts: "+score+" / 28";
+h.remove();
+if(score>=28){time=0;show("memories");}
+}
+game.appendChild(h);
+setTimeout(()=>h.remove(),5000);
+},350);
+}
+
+function showReasons(){show("reasons");}
+
+function nextReason(){
+document.getElementById("reasonBox").innerHTML=reasons[r];
+r++;
+if(r>=reasons.length){
+setTimeout(()=>show("quiz"),1200);
+}
+}
+
+function finish(){
+show("end");
+typeLetter();
+}
+
+const msg=`My Dearest Chris,
+
+Happy 28th Birthday! ❤️
+
+Thank you for every smile, every laugh, every adventure, and every hug.
+You are my favorite person, my safe place, and my greatest blessing.
+
+I hope this year brings you happiness, health, success, and unforgettable memories.
+No matter where life takes us, I will always choose you.
+
+Happy Birthday, my love.
+
+Forever yours,
+❤️ Angie ❤️`;
+
+function typeLetter(){
+let i=0;
+const box=document.getElementById("letter");
+box.innerHTML="";
+let t=setInterval(()=>{
+box.innerHTML+=msg.charAt(i);
+i++;
+if(i>=msg.length)clearInterval(t);
+},30);
+}
+
+function fireworks(){
+for(let i=0;i<250;i++){
+let e=document.createElement("div");
+e.innerHTML=["❤️","🎉","✨","🎈","🎂"][Math.floor(Math.random()*5)];
+e.style.position="fixed";
+e.style.left=Math.random()*100+"vw";
+e.style.top=Math.random()*100+"vh";
+e.style.fontSize=(20+Math.random()*25)+"px";
+document.body.appendChild(e);
+e.animate([{transform:"translateY(0)"},{transform:"translateY(-250px) rotate(720deg)",opacity:0}],{duration:3000});
+setTimeout(()=>e.remove(),3000);
+}
+}
+</script>
+</body>
+</html>
